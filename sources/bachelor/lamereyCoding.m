@@ -1,38 +1,39 @@
 clear
 
-nTransient = 0;
-nCalc = 100000;
+nTransient = 10;
+nCalc = 10000;
 X = zeros(1,nCalc);
 Y = zeros(1,nCalc);
 
 global x s
 alphabetSize = 32;
 
-alpha = 0.97;
-beta = 1 - alpha;
+alpha = 0.001;
 
-data1 = ['маги€'];
-data2 = ['маги€'; 'супер'];
+data1 = ['€беда'; 'плинк'];
+data2 = ['€беда'; '€русы'];
 
-x = 0 : 1 : alphabetSize;
+x = 0 : 0.1 : 1;
 y = x;
 s = 1/2;
 
 figure
 plot(x,y,'r');
-grid;
 hold on;
+grid
 
 plotData1 = Calculator(data1, alphabetSize);
 plotData2 = Calculator(data2, alphabetSize);
 
-% plot(plotData2(1,:), plotData2(2,:), 'b'), grid
+plot(plotData2(1,:), plotData2(2,:), 'k')
 
-x1 = 0.5;
-y1 = 5.5;
+x1 = 0.0015;
+y1 = 0.8741;
+% y1 = alphabetSize*rand;
 
 for r = 1:nTransient
     x1 = Iterator(x1, plotData1);
+    disp(char(y1*alphabetSize+double('а')));
     y1 = Iterator(y1, plotData2);
 end
 
@@ -43,8 +44,8 @@ for r = 2:nCalc
     Y(r) = Iterator((1-alpha)*Y(r-1) + alpha*X(r-1), plotData2);
 end
 
-disp(char(X+double('а')));
-disp(char(Y+double('а')));
+disp(char(X*alphabetSize+double('а')));
+disp(char(Y*alphabetSize+double('а')));
 
 xLamerey=[X; X];
 xLamerey=xLamerey(:);
