@@ -20,6 +20,7 @@ s = 1/2;
 
 figure
 plot(x,y,'r');
+grid;
 hold on;
 
 plotData1 = Calculator(data1, alphabetSize);
