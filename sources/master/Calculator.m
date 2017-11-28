@@ -57,25 +57,38 @@ end
 
 Y = informationPlot(I, 2);
 
+delta = x(2) - x(1);
+
 for i = 1 : length(informationPlot)
-    X(i) = X(i) + (x(2) - x(1))/(alphabetSize^(q))/2;
-    Y(i) = Y(i) + (x(2) - x(1))/(alphabetSize^(q))/2;
+    X(i) = X(i) + delta/(alphabetSize^(q))/2;
+    Y(i) = Y(i) + s*delta/(alphabetSize^(q))/2;
 end
 
-xPlot = zeros(1, 2*length(informationPlot)+2);
-yPlot = zeros(1, 2*length(informationPlot)+2);
+xPlot = zeros(1, 2 * 10 * alphabetSize^q);
+yPlot = zeros(1, 2 * 10 * alphabetSize^q);
 
 % accuracy = (x(2) - x(1))/(alphabetSize^(q+1));
 accuracy = 0;
 
-for i = 1 : length(informationPlot)
-    xPlot(2*i) = X(i) - (x(2) - x(1))/(alphabetSize^(q))/2 + accuracy;
-    yPlot(2*i) = Y(i) - s*(x(2) - x(1))/(alphabetSize^(q))/2 + accuracy*s;
-    xPlot(2*i + 1)     = X(i) + (x(2) - x(1))/(alphabetSize^(q))/2 - accuracy;
-    yPlot(2*i + 1)     = Y(i) + s*(x(2) - x(1))/(alphabetSize^(q))/2 - accuracy*s;
-end
+j = 1;
 
-xPlot(length(xPlot)) = 1;
+for i = 1 : 10 * alphabetSize^q
+    unit = delta/(alphabetSize^(q));
+    left = (i - 1) * unit;
+    right = i * unit;
+    if (j <= length(X) && left <= X(j) && X(j) < right)
+        xPlot(2*i - 1) = left + accuracy;
+        yPlot(2*i - 1) = Y(j) - s*unit/2 + accuracy*s;
+        xPlot(2*i)     = right - accuracy;
+        yPlot(2*i)     = Y(j) + s*unit/2 - accuracy*s;
+        j = j + 1;
+    else
+        xPlot(2*i - 1) = left + accuracy;
+        yPlot(2*i - 1) = 0 + accuracy*(1/unit);
+        xPlot(2*i)     = right - accuracy;
+        yPlot(2*i)     = 1 - accuracy*(1/unit);
+    end
+end
 
 plotXY = [xPlot; yPlot];
 
