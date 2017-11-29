@@ -57,36 +57,34 @@ end
 
 Y = informationPlot(I, 2);
 
-delta = x(2) - x(1);
+delta = (x(end) - x(1)) / (alphabetSize^(q));
 
 for i = 1 : length(informationPlot)
-    X(i) = X(i) + delta/(alphabetSize^(q))/2;
-    Y(i) = Y(i) + s*delta/(alphabetSize^(q))/2;
+    X(i) = X(i) + delta/2;
+    Y(i) = Y(i) + delta/2;
 end
 
-xPlot = zeros(1, 2 * 10 * alphabetSize^q);
-yPlot = zeros(1, 2 * 10 * alphabetSize^q);
+xPlot = zeros(1, 2 * (1/delta));
+yPlot = zeros(1, 2 * (1/delta));
 
-% accuracy = (x(2) - x(1))/(alphabetSize^(q+1));
 accuracy = 0;
 
 j = 1;
 
-for i = 1 : 10 * alphabetSize^q
-    unit = delta/(alphabetSize^(q));
-    left = (i - 1) * unit;
-    right = i * unit;
+for i = 1 : (1/delta)
+    left = (i - 1) * delta;
+    right = i * delta;
     if (j <= length(X) && left <= X(j) && X(j) < right)
         xPlot(2*i - 1) = left + accuracy;
-        yPlot(2*i - 1) = Y(j) - s*unit/2 + accuracy*s;
-        xPlot(2*i)     = right - accuracy;
-        yPlot(2*i)     = Y(j) + s*unit/2 - accuracy*s;
+        yPlot(2*i - 1) = Y(j) - s*delta/2;
+        xPlot(2*i)     = right;
+        yPlot(2*i)     = Y(j) + s*delta/2;
         j = j + 1;
     else
-        xPlot(2*i - 1) = left + accuracy;
-        yPlot(2*i - 1) = 0 + accuracy*(1/unit);
+        xPlot(2*i - 1) = left;
+        yPlot(2*i - 1) = 0;
         xPlot(2*i)     = right - accuracy;
-        yPlot(2*i)     = 1 - accuracy*(1/unit);
+        yPlot(2*i)     = x(end);
     end
 end
 
