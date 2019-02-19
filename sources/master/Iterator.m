@@ -11,7 +11,6 @@ function y = Iterator( x, plotData )
         end
     end
     
-    disp('YD')
     y = 0;
 
 end

@@ -47,6 +47,11 @@ plot(xLamerey, yLamerey, 'g');
 
 % ========
 
+figure
+plot(x,y,'r');
+hold on;
+grid
+
 plotData2 = Calculator(data2, alphabetSize);
 
 plot(plotData2(1,:), plotData2(2,:), 'k')
@@ -54,12 +59,12 @@ plot(plotData2(1,:), plotData2(2,:), 'k')
 x1 = 0.0122;
 
 for r = 1:nTransient
-    x1 = Iterator(x1, plotData);
+    x1 = Iterator(x1, plotData2);
 end
 
 X(1) = x1;
 for r = 2:nCalc
-    X(r) = Iterator(X(r-1), plotData);
+    X(r) = Iterator(X(r-1), plotData2);
 end
 
 disp(char(X*alphabetSize+double('à')));
@@ -69,6 +74,8 @@ xLamerey2=xLamerey2(:);
 yLamerey2=[xLamerey2(2:end); xLamerey2(end)];
 
 plot(xLamerey2, yLamerey2, 'g');
+
+% =======
 
 figure
 [Xp,Yp] = meshgrid(plotData(1, :), plotData2(1, :));
