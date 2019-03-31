@@ -82,8 +82,21 @@ figure
 
 for q = 1:length(Xp)
     for w = 1:length(Yp)
-        Z(q, w) = plotData(2, q) + plotData2(2, w);
+        Z1(q, w) = plotData(2, q);
     end
 end
 
-surf(Xp, Yp, Z)
+surf(Xp, Yp, Z1)
+
+% =======
+
+figure
+[Xp,Yp] = meshgrid(plotData(1, :), plotData2(1, :));
+
+for q = 1:length(Xp)
+    for w = 1:length(Yp)
+        Z2(q, w) = plotData2(2, q);
+    end
+end
+
+surf(Xp, Yp, Z2)
